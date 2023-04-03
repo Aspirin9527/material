@@ -1,12 +1,11 @@
 package com.amx.material;
 
 
+import com.amx.material.utils.RedisCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -17,12 +16,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class RedisTest {
 
-    @Qualifier("defRedisTemplate")
     @Autowired
-    StringRedisTemplate defRedisTemplate;
+    RedisCache redisCache;
 
     @Test
     public void TestAdd(){
-        defRedisTemplate.opsForValue().set("id","007");
+        Object cacheObject = redisCache.getCacheObject("1");
+        System.out.println(cacheObject);
     }
 }

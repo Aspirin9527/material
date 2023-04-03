@@ -27,6 +27,12 @@
             <artifactId>material-common</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.amx</groupId>
+            <artifactId>material-security</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <!-- 构建项目需要的插件配置 -->
