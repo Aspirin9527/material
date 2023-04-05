@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace用于java代码调用时识别指定xml的mapper文件 -->
+<mapper namespace="com.amx.material.mapper.MenuMapper">
+
+    <select id="getPermissionByUserId" resultType="java.lang.String">
+        select
+        m.permission
+        from sys_user_role r
+        left join sys_role_menu rm on r.role_id = rm.role_id
+        left join sys_menu m on rm.menu_id  = m.permission
+        where user_id = #{id}
+    </select>
+</mapper>

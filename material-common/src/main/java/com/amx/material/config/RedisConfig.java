@@ -1,6 +1,5 @@
 package com.amx.material.config;
 
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +10,7 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
@@ -42,11 +42,11 @@ public class RedisConfig {
         FastJsonRedisSerializer<Object> serializer = new FastJsonRedisSerializer<>(Object.class);
 
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
-        template.setKeySerializer(serializer);
+        template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(serializer);
 
         // Hash的key也采用StringRedisSerializer的序列化方式
-        template.setHashKeySerializer(serializer);
+        template.setHashKeySerializer(new StringRedisSerializer());
         template.setHashValueSerializer(serializer);
 
         return template;

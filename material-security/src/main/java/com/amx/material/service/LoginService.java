@@ -12,8 +12,4 @@ public interface LoginService {
     ResponseResult login(SysUser sysUser);
 
 
-    ResponseResult logout();
-
-
-
 }

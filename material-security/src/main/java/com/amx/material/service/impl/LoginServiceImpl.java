@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,12 +51,4 @@ public class LoginServiceImpl implements LoginService {
         return new ResponseResult(200, "登录成功", map);
     }
 
-    @Override
-    public ResponseResult logout() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Integer userid = loginUser.getSysUser().getId();
-        redisCache.deleteObject(userid.toString());
-        return new ResponseResult(200, "退出成功");
-    }
 }

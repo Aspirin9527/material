@@ -22,12 +22,9 @@ public class LoginController {
        return loginService.login(sysUser);
     }
 
-    @GetMapping("/logout")
-    public ResponseResult logout(){
-        return loginService.logout();
-    }
 
-    @RequestMapping("/hello")
+
+    @GetMapping("/hello")
     public String hello(){
         return "hello";
     }
