@@ -7,10 +7,10 @@
 
     <select id="getPermissionByUserId" resultType="java.lang.String">
         select
-        m.permission
+            m.permission
         from sys_user_role r
-        left join sys_role_menu rm on r.role_id = rm.role_id
-        left join sys_menu m on rm.menu_id  = m.permission
+                 left join sys_role_menu rm on r.role_id = rm.role_id
+                 left join sys_menu m on rm.menu_id  = m.id
         where user_id = #{id}
     </select>
 </mapper>
