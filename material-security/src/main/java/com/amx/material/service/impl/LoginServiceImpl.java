@@ -29,8 +29,6 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     RedisCache redisCache;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseResult login(SysUser sysUser) {

@@ -7,7 +7,7 @@
 
     <select id="getPermissionByUserId" resultType="java.lang.String">
         select
-            m.permission
+        case m.`type` when 2 then permission else href end as permission
         from sys_user_role r
                  left join sys_role_menu rm on r.role_id = rm.role_id
                  left join sys_menu m on rm.menu_id  = m.id

@@ -5,6 +5,7 @@ import com.amx.material.entity.ResponseResult;
 import com.amx.material.filter.JwtAuthenticationTokenFilter;
 import com.amx.material.utils.JwtUtil;
 import com.amx.material.utils.RedisCache;
+import com.amx.material.utils.WebUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -36,6 +39,11 @@ public class SecurityConfig {
 
     @Autowired
     RedisCache redisCache;
+
+    @Autowired
+    private AuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
 
     @Bean
@@ -65,14 +73,13 @@ public class SecurityConfig {
                 throw new RuntimeException("token非法");
             }
             redisCache.deleteObject("userId:" + userid);
-            response.setContentType("application/json;charset=UTF-8");
-            response.setStatus(HttpStatus.OK.value());
-
-            response.getWriter().write(JSONObject.toJSONString(new ResponseResult(200, "注销成功")));
+            WebUtils.renderString(response,JSONObject.toJSONString(new ResponseResult(200, "注销成功")));
         });
 
         //把token校验过滤器添加到过滤器链中
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        //配置异常处理器
+        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).accessDeniedHandler(accessDeniedHandler);
         return http.build();
     }
 

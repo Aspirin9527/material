@@ -4,6 +4,7 @@ import com.amx.material.entity.ResponseResult;
 import com.amx.material.entity.SysUser;
 import com.amx.material.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,7 +24,7 @@ public class LoginController {
     }
 
 
-
+    @PreAuthorize("hasAnyAuthority('sys:user:list')")
     @GetMapping("/hello")
     public String hello(){
         return "hello";
